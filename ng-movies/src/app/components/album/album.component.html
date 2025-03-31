@@ -1,0 +1,126 @@
+<section class="container py-1">
+  <button
+    type="button"
+    class="btn btn-danger btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+    (click)="newMovie()"
+  >
+    <i class="fa fa-save"></i> + Add Movie
+  </button>
+</section>
+
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+      <div *ngFor="let item of listMovies" class="col">
+        <div class="card shadow card-hover">
+          <img [src]="item.image" class="bd-placeholder-img card-img-top" width="100%" height="280" />
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-body-secondary">{{ item.time }}</small>
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-warning"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  (click)="selectItem(item)"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="delete(item.id)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 *ngIf="!isUpdate" class="modal-title fs-5">Add Movie</h1>
+        <h1 *ngIf="isUpdate" class="modal-title fs-5">Update Movie</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formMovie">
+          <div class="mb-3 row">
+            <label class="col-form-label">Name</label>
+            <div>
+              <input type="text" class="form-control" formControlName="name" />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-form-label">Description</label>
+            <div>
+              <input type="text" class="form-control" formControlName="description" />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-form-label">Time</label>
+            <div>
+              <input type="text" class="form-control" formControlName="time" />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-form-label">Image</label>
+            <div>
+              <input type="text" class="form-control" formControlName="image" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          data-bs-dismiss="modal"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          *ngIf="!isUpdate"
+          (click)="save()"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning btn-sm"
+          *ngIf="isUpdate"
+          (click)="update()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
